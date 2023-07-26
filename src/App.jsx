@@ -1,5 +1,4 @@
-
-//import Authenitcate from './components/Authenitcate'
+import React from 'react';
 import SignUpForm from './components/SignUpForm'
 
 
@@ -9,4 +8,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
