@@ -18,6 +18,8 @@ const style = {
 
 export default function BasicModal({isVisible, setIsVisible, message}) {
   const closeModal = () => setIsVisible(false);
+  if(message === 'jwt malformed')
+    message = 'Please Create an Account First'
   return (
     <div>
       <Modal

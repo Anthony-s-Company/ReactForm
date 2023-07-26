@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import {
   MDBBtn,
@@ -13,13 +14,12 @@ import BasicModal from "./BasicModal";
 
 const SIGN_UP_URL = "https://fsa-jwt-practice.herokuapp.com/signup";
 
-export default function SignUpForm() {
+export default function SignUpForm({token, setToken}) {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [token, setToken] = useState(null);
   const [isSigned, setIsSigned] = useState(false);
   const [msg, setMsg] = useState("");
 
@@ -34,33 +34,38 @@ export default function SignUpForm() {
 
     const newUser = {
       username,
-      password,
+      password
     };
 
-    try {
-      const response = await fetch(SIGN_UP_URL,
-        {
-            method: 'POST',
-            body: JSON.stringify(newUser),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-    const {message, token} = await response.json();
-    setToken(token);
-    setIsSigned(true);
-    setMsg(message);
-    resetForm();
-
-    } catch (error) {
-      setError(error.message);
+    if(username.length > 0 && password.length > 0 && email.length > 0){
+      try {
+        const response = await fetch(SIGN_UP_URL,
+          {
+              method: 'POST',
+              body: JSON.stringify(newUser),
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          });
+  
+      const result = await response.json();
+      setToken(result.token);
+      setIsSigned(true);
+      setMsg(result.message);
+      resetForm();
+  
+      } catch (error) {
+        setError(error.message);
+      }
+    }else{
+      setError("All Field are required...")
+      setIsSigned(true);
     }
   }
 
   return (
     <>
-    {error && <p>{error}</p>}
+    {error && <BasicModal isVisible={isSigned} setIsVisible={setIsSigned} message={error}/>}
     {token && <BasicModal isVisible={isSigned} setIsVisible={setIsSigned} message={msg}/>}
     <form method="post" onSubmit={handleSubmit}>
       <MDBContainer fluid className='d-flex align-items-center justify-content-center bg-image' style={{backgroundImage: 'url(https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp)'}}>
