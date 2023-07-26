@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -15,11 +16,8 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal(props) {
-  const { isVisible, setIsVisible, msg} = props;
+export default function BasicModal({isVisible, setIsVisible, message}) {
   const closeModal = () => setIsVisible(false);
-  console.log(msg)
-
   return (
     <div>
       <Modal
@@ -30,10 +28,9 @@ export default function BasicModal(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-           
+            {message}
           </Typography>
         </Box>
       </Modal>
