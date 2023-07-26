@@ -35,7 +35,7 @@ export default function SignUpForm({token, setToken}) {
       password
     };
 
-    if(username.length > 8 && password.length > 8){
+    if(username.length > 0 && password.length > 8){
       try {
         const response = await fetch(SIGN_UP_URL,
           {
@@ -56,7 +56,7 @@ export default function SignUpForm({token, setToken}) {
         setError(error.message);
       }
     }else{
-      setError("All Field Require at least 8 Characters")
+      setError("Password Require at least 8 Characters")
       setIsSigned(true);
     }
   }
