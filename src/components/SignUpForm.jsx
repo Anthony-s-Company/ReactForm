@@ -17,7 +17,6 @@ const SIGN_UP_URL = "https://fsa-jwt-practice.herokuapp.com/signup";
 export default function SignUpForm({token, setToken}) {
 
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isSigned, setIsSigned] = useState(false);
@@ -25,7 +24,6 @@ export default function SignUpForm({token, setToken}) {
 
   function resetForm() {
     setUsername("");
-    setEmail("");
     setPassword("");
   }
 
@@ -37,7 +35,7 @@ export default function SignUpForm({token, setToken}) {
       password
     };
 
-    if(username.length > 8 && password.length > 8 && email.length > 0){
+    if(username.length > 8 && password.length > 8){
       try {
         const response = await fetch(SIGN_UP_URL,
           {
@@ -58,7 +56,7 @@ export default function SignUpForm({token, setToken}) {
         setError(error.message);
       }
     }else{
-      setError("All Field are required...")
+      setError("All Field Require at least 8 Characters")
       setIsSigned(true);
     }
   }
@@ -76,10 +74,6 @@ export default function SignUpForm({token, setToken}) {
             <MDBInput wrapperClass='mb-4' label='Your Name' size='lg' id='form1' type='text' 
                       value={username} 
                       onChange={(e) => {setUsername(e.target.value);}}
-            />
-            <MDBInput wrapperClass='mb-4' label='Your Email' size='lg' id='form2' type='email'
-                      value={email}
-                      onChange={(e) => {setEmail(e.target.value);}}
             />
             <MDBInput wrapperClass='mb-4' label='Password' size='lg' id='form3' type='password'
                       value={password}
